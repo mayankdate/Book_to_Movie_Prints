@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<base href="{{ base_url }}">
+<meta charset="utf-8">
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  :root {
+    --paper: #f4efe6;
+    --ink: #1f1b17;
+    --rule: #a8947a;
+    --accent: #8a3b2b;
+    --muted: #6b5f52;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+  }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    padding: 16mm 20mm 16mm 20mm;
+    page-break-after: always;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  .title {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-weight: 400;
+    font-size: 40pt;
+    line-height: 1.05;
+    margin: 0 0 2mm 0;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    font-family: "Georgia", serif;
+    font-style: italic;
+    font-size: 13pt;
+    color: var(--muted);
+    margin-bottom: 5mm;
+  }
+
+  .tags {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 0.3mm solid var(--rule);
+    border-bottom: 0.3mm solid var(--rule);
+    padding: 3.5mm 0;
+    margin-bottom: 7mm;
+  }
+  .tag {
+    text-align: center;
+    padding: 0 3mm;
+    border-right: 0.2mm solid var(--rule);
+  }
+  .tag:last-child { border-right: none; }
+  .tag-label {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 7pt;
+    color: var(--muted);
+    margin-bottom: 1.5mm;
+  }
+  .tag-value {
+    font-family: "Georgia", serif;
+    font-size: 11pt;
+    color: var(--accent);
+  }
+
+  .images {
+    display: flex;
+    gap: 8mm;
+    margin-bottom: 7mm;
+  }
+  .image-slot {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 0.3mm solid var(--rule);
+  }
+  .image-area {
+    height: 118mm;
+    background: #e3dccf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .image-area img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  .image-area .placeholder {
+    font-family: "Georgia", serif;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 10pt;
+    text-align: center;
+    padding: 0 6mm;
+  }
+  .image-slot .caption {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 7.5pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 1.8mm 3mm;
+    text-align: center;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 0.3mm solid var(--rule);
+    border-bottom: 0.3mm solid var(--rule);
+    padding: 4mm 0;
+    margin-bottom: 6mm;
+  }
+  .stat-col {
+    padding: 0 6mm;
+  }
+  .stat-col:first-child {
+    border-right: 0.2mm solid var(--rule);
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5pt;
+    padding: 1.2mm 0;
+  }
+  .stat .k {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 7.5pt;
+    color: var(--muted);
+    align-self: center;
+  }
+  .stat .v {
+    text-align: right;
+    font-family: "Georgia", serif;
+  }
+
+  .blurb {
+    font-family: "Georgia", serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .blurb-lead {
+    font-size: 22pt;
+    font-weight: 600;
+    color: var(--accent);
+    padding-right: 1mm;
+  }
+</style>
+</head>
+<body>
+{% for e in entries %}
+<div class="page">
+
+  <h1 class="title">{{ e.movie_title }}</h1>
+  <div class="subtitle">adapted from &ldquo;{{ e.book_title }}&rdquo; by {{ e.book_author }}</div>
+
+  <div class="tags">
+    <div class="tag">
+      <div class="tag-label">Language</div>
+      <div class="tag-value">{{ e.language }}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">Faithfulness</div>
+      <div class="tag-value">{{ e.faithfulness }}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">Realism</div>
+      <div class="tag-value">{{ e.realism }}</div>
+    </div>
+    <div class="tag">
+      <div class="tag-label">Genre</div>
+      <div class="tag-value">{{ e.genre }}</div>
+    </div>
+  </div>
+
+  <div class="images">
+    <div class="image-slot">
+      <div class="image-area">
+      {% if e.book_image %}<img src="data/bookcovers/{{ e.book_image }}">{% else %}<div class="placeholder">book cover<br>{{ e.book_title }}</div>{% endif %}
+      </div>
+      <div class="caption">The Novel &middot; {{ e.book_year }}</div>
+    </div>
+    <div class="image-slot">
+      <div class="image-area">
+      {% if e.movie_image %}<img src="data/movieposters/{{ e.movie_image }}">{% else %}<div class="placeholder">movie poster<br>{{ e.movie_title }}</div>{% endif %}
+      </div>
+      <div class="caption">The Film &middot; {{ e.movie_year }}</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-col">
+      <div class="stat"><span class="k">Author</span><span class="v">{{ e.book_author }}</span></div>
+      <div class="stat"><span class="k">Published</span><span class="v">{{ e.book_year }}</span></div>
+    </div>
+    <div class="stat-col">
+      <div class="stat"><span class="k">Director</span><span class="v">{{ e.director }}</span></div>
+      <div class="stat"><span class="k">Released</span><span class="v">{{ e.movie_year }}</span></div>
+      <div class="stat"><span class="k">Studio</span><span class="v">{{ e.studio }}</span></div>
+      <div class="stat"><span class="k">Starring</span><span class="v">{{ e.lead_cast }}</span></div>
+    </div>
+  </div>
+
+  <div class="blurb"><span class="blurb-lead">{{ e.blurb[0] }}</span>{{ e.blurb[1:] }}</div>
+
+</div>
+{% endfor %}
+</body>
+</html>
