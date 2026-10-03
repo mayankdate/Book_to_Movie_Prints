@@ -1,23 +1,64 @@
-# Secrets
-TMDB_key.txt
+# ---- Generated outputs ----
+# All artifacts under output/ are regenerable from the notebooks + APIs.
+# Flip the leading / off if you want to version them (e.g. for archival).
+output/
+data/bookcovers
+data/movieposters
 
-# Python
+# Excel atomic-save temp files
+*.tmp.xlsx
+*.tmp.xls
+
+# ---- Credentials — never commit ----
+*.key
+*.pem
+*_key.txt
+*_secret*
+.env
+.env.*
+!.env.example
+
+# ---- Python ----
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
 .venv/
 venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
 
-# R / RStudio
-.Rproj.user/
+# ---- Jupyter ----
+# Keep notebooks, but strip large outputs before committing (see nbstripout).
+.jupyter/
+profile_default/
+
+# ---- R ----
 .Rhistory
 .RData
 .Ruserdata
+.Rproj.user/
+*.Rproj
 
-# Editor
-.vscode/
-.idea/
-
-# OS
+# ---- OS ----
 .DS_Store
 Thumbs.db
-data
+desktop.ini
+$RECYCLE.BIN/
+
+# ---- Editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Logs / caches ----
+*.log
+logs/
+.cache/
