@@ -155,12 +155,6 @@
     line-height: 1.55;
     color: var(--ink);
   }
-  .blurb-lead {
-    font-size: 22pt;
-    font-weight: 600;
-    color: var(--accent);
-    padding-right: 1mm;
-  }
 </style>
 </head>
 <body>
@@ -217,7 +211,7 @@
     </div>
   </div>
 
-  <div class="blurb"><span class="blurb-lead">{{ e.blurb[0] }}</span>{{ e.blurb[1:] }}</div>
+  <div class="blurb">{{ e.blurb }}</div>
 
 </div>
 {% endfor %}
