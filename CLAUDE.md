@@ -25,9 +25,7 @@ Two scripts, one data file, one template:
 From the project root:
 
 ```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1       # macOS/Linux: source .venv/bin/activate
-pip install -r requirements.txt
+uv sync
 ```
 
 ### 2. Chrome
@@ -47,8 +45,8 @@ Open Library needs no key.
 ## Running
 
 ```powershell
-python scripts/populate.py      # fetches metadata, downloads images
-python scripts/render.py        # builds output/gallery.pdf
+uv run python scripts/populate.py      # fetches metadata, downloads images
+uv run python scripts/render.py        # builds output/gallery.pdf
 ```
 
 `populate.py` prints one line per entry showing what it fetched or what it couldn't find. Any row it fails on stays empty; `render.py` renders those slots as labeled placeholders. The CSV is saved after every row, so Ctrl+C is safe.
@@ -84,7 +82,8 @@ Running `populate.py` again only hits the APIs for rows with empty cells, so you
 ```
 Book_to_Movie_Prints/
 ├── TMDB_key.txt                    # (gitignored) your TMDb API key, one line
-├── requirements.txt
+├── pyproject.toml
+├── uv.lock
 ├── .gitignore
 ├── data/
 │   ├── data.csv                    # the data

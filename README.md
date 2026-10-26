@@ -6,18 +6,16 @@ Generates a print-ready A4 PDF gallery pairing novels with their film adaptation
 
 ```powershell
 # 1. Set up Python environment
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+uv sync
 
 # 2. Get a free TMDb API key (see below) and save it:
 echo YOUR_KEY > TMDB_key.txt
 
 # 3. Fetch metadata and images
-python scripts/populate.py
+uv run python scripts/populate.py
 
 # 4. Render the PDF
-python scripts/render.py
+uv run python scripts/render.py
 # Output: output/gallery.pdf
 ```
 
@@ -33,7 +31,7 @@ Open Library (for book metadata) requires no key.
 
 Open `data/data.csv` and add a row. The only required fields for auto-fill are `movie_title`, `movie_year`, `book_title`, and `book_author`. Fill `faithfulness`, `realism`, and `blurb` yourself — `populate.py` will never overwrite cells that already have content.
 
-Run `python scripts/populate.py` again to fetch the new entry.
+Run `uv run python scripts/populate.py` again to fetch the new entry.
 
 ## Project structure
 
@@ -51,11 +49,12 @@ Book_to_Movie_Prints/
 │   ├── gallery.pdf       # final deliverable
 │   └── gallery.html      # browser preview (open to tweak CSS without re-running Python)
 ├── TMDB_key.txt          # your TMDb key (gitignored)
-└── requirements.txt
+├── pyproject.toml        # Python packages (uv); uv.lock pins exact versions
+└── uv.lock
 ```
 
 ## Requirements
 
-- Python 3.9+
+- [uv](https://docs.astral.sh/uv/) (installs Python 3.14 for you)
 - Google Chrome (or Edge — see `scripts/render.py` to switch)
-- `pip install -r requirements.txt`
+- `uv sync`

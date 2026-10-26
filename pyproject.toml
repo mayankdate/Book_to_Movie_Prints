@@ -1,0 +1,9 @@
+[project]
+name = "book-to-movie-prints"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "playwright",
+    "jinja2",
+    "requests",
+]
